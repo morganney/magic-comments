@@ -2,6 +2,7 @@
 
 ![CI](https://github.com/morganney/magic-comments/actions/workflows/ci.yml/badge.svg)
 [![codecov](https://codecov.io/gh/morganney/magic-comments/branch/main/graph/badge.svg?token=5O23HMHBKG)](https://codecov.io/gh/morganney/magic-comments)
+[![NPM version](https://img.shields.io/npm/v/magic-comments.svg)](https://www.npmjs.com/package/magic-comments)
 
 Tooling utility to add configurable webpack [magic comments](https://webpack.js.org/api/module-methods/#magic-comments) to dynamic `import()` expressions at build time.
 
@@ -56,3 +57,8 @@ dynamicImportsMeta.forEach(meta) => {
   console.log(magicComment)
 })
 ```
+
+## Examples
+
+* [`babel-plugin-magic-comments`](https://github.com/morganney/babel-plugin-magic-comments)
+* [`magic-comments-loader`](https://github.com/morganney/magic-comments-loader)
