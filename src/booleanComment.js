@@ -1,4 +1,4 @@
-import { getOverrideSchema, pathIsMatch, importPrefix } from './util.js'
+import { getOverrideSchema, pathIsMatch, relativePathPrefix } from './util.js'
 
 const defaultSchema = {
   type: 'object',
@@ -38,7 +38,7 @@ const getConfig = (
   importPath,
   defaultConfig = { active: true }
 ) => {
-  const path = match === 'import' ? importPath.replace(importPrefix, '') : filepath
+  const path = match === 'import' ? importPath.replace(relativePathPrefix, '') : filepath
 
   if (value === true) {
     return defaultConfig

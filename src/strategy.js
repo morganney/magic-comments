@@ -19,5 +19,24 @@ const commentFor = {
   webpackInclude,
   webpackExclude
 }
+const getMagicComment = ({
+  modulePath,
+  importPath,
+  options = { webpackChunkName: true },
+  match = 'module',
+  open = false
+}) => {
+  const bareImportPath = importPath.trim().replace(/^['"`]|['"`]$/g, '')
+  const magic = Object.entries(options)
+    .map(([key, value]) => commentFor[key](modulePath, bareImportPath, value, match))
+    .filter(Boolean)
 
-export { commentFor }
+  if (!magic.length) {
+    // The provided comment values produced only falsy results
+    return ''
+  }
+
+  return open ? ` ${magic.join(', ')} ` : `/* ${magic.join(', ')} */`
+}
+
+export { commentFor, getMagicComment }

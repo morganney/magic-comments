@@ -2,7 +2,7 @@ import { webpackMode } from '../src/webpackMode.js'
 
 describe('webpackMode', () => {
   it('returns a "webpackMode" magic comment', () => {
-    const testPath = 'some/test/module.js'
+    const testPath = '/some/test/module.js'
     const testImportPath = './some/import/path'
 
     expect(webpackMode(testPath, testImportPath, true)).toEqual('webpackMode: "lazy"')
@@ -27,7 +27,7 @@ describe('webpackMode', () => {
         config: { mode: 'weak' },
         overrides: [
           {
-            files: 'some/**/*.js',
+            files: '**/some/**/*.js',
             config: {
               active: false
             }
