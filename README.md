@@ -52,7 +52,7 @@ dynamicImportsMeta.forEach(meta) => {
     }
   })
   
-  // prints/* webpackChunkName: "folder-module", webpackFetchPriority: "high" */
+  // prints /* webpackChunkName: "folder-module", webpackFetchPriority: "high" */
   console.log(magicComment)
 })
 ```
