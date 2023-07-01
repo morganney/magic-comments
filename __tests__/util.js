@@ -31,20 +31,20 @@ describe('dynamicImportsWithoutComments', () => {
 
 describe('pathIsMatch', () => {
   it('compares a filepath to glob patterns', () => {
-    expect(pathIsMatch('some/file/path.js', 'some/**/*.js')).toEqual(true)
-    expect(pathIsMatch('some/file/path', ['some/**/*.js', '!some/file/*.js'])).toEqual(
+    expect(pathIsMatch('some/file/path.js', '**/some/**/*.js')).toEqual(true)
+    expect(pathIsMatch('some/file/path', ['**/some/**/*.js', '!some/file/*.js'])).toEqual(
       false
     )
-    expect(pathIsMatch('some/file/path.js', ['some/**/*.js', '!some/miss/*.js'])).toEqual(
-      true
-    )
+    expect(
+      pathIsMatch('some/file/path.js', ['**/some/**/*.js', '!some/miss/*.js'])
+    ).toEqual(true)
   })
 })
 
 describe('getOverrideConfig', () => {
   const overrides = [
     {
-      files: 'some/**/*.js',
+      files: '**/some/**/*.js',
       config: {
         test: true
       }

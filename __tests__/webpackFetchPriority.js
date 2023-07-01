@@ -2,7 +2,7 @@ import { webpackFetchPriority } from '../src/webpackFetchPriority.js'
 
 describe('webpackFetchPriority', () => {
   it('returns a "webpackFetchPriority" magic comment', () => {
-    const testPath = 'some/test/module.js'
+    const testPath = '/some/test/module.js'
     const testImportPath = './some/import/path'
 
     expect(webpackFetchPriority(testPath, testImportPath, true)).toEqual(
@@ -31,7 +31,7 @@ describe('webpackFetchPriority', () => {
         config: { fetchPriority: 'auto' },
         overrides: [
           {
-            files: 'some/**/*.js',
+            files: '**/some/**/*.js',
             config: {
               active: false
             }

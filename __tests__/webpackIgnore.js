@@ -2,11 +2,11 @@ import { webpackIgnore } from '../src/webpackIgnore.js'
 
 describe('webpackIgnore', () => {
   it('returns a "webpackIgnore" magic comment', () => {
-    const testPath = 'some/test/module.js'
+    const testPath = '/some/test/module.js'
     const testImportPath = './some/import/path'
 
     expect(webpackIgnore(testPath, testImportPath, true)).toEqual('webpackIgnore: true')
-    expect(webpackIgnore(testPath, testImportPath, 'some/**/*.js')).toEqual(
+    expect(webpackIgnore(testPath, testImportPath, '**/some/**/*.js')).toEqual(
       'webpackIgnore: true'
     )
     expect(
@@ -20,7 +20,7 @@ describe('webpackIgnore', () => {
         config: { active: false },
         overrides: [
           {
-            files: 'some/**/*.js',
+            files: '**/some/**/*.js',
             config: {
               active: true
             }

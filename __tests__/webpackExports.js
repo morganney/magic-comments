@@ -4,13 +4,13 @@ import { webpackExports } from '../src/webpackExports.js'
 
 describe('webpackExports', () => {
   it('returns a "webpackExports" magic comment', () => {
-    const testPath = 'some/test/module.js'
+    const testPath = '/some/test/module.js'
     const testImportPath = './some/import/path'
     const exports = jest.fn(() => ['mock'])
     const comment = webpackExports(testPath, testImportPath, { config: { exports } })
 
     expect(comment).toEqual('webpackExports: ["mock"]')
-    expect(exports).toHaveBeenCalledWith('some/test/module.js', './some/import/path')
+    expect(exports).toHaveBeenCalledWith('/some/test/module.js', './some/import/path')
     expect(webpackExports(testPath, testImportPath, true)).toEqual('')
     expect(webpackExports(testPath, testImportPath, false)).toEqual('')
     expect(
@@ -28,7 +28,7 @@ describe('webpackExports', () => {
         config: { exports: () => ['a', 'b'] },
         overrides: [
           {
-            files: 'some/**/*.js',
+            files: '**/some/**/*.js',
             config: {
               active: false
             }
@@ -36,5 +36,14 @@ describe('webpackExports', () => {
         ]
       })
     ).toEqual('')
+  })
+
+  it('can be used as a function', () => {
+    const testPath = '/some/test/module.js'
+    const testImportPath = './some/import/path'
+    const exports = jest.fn(() => ['mock'])
+    const comment = webpackExports(testPath, testImportPath, exports)
+
+    expect(comment).toEqual('webpackExports: ["mock"]')
   })
 })

@@ -11,6 +11,12 @@ import { schema as webpackExcludeSchema } from './webpackExclude.js'
 const schema = {
   type: 'object',
   properties: {
+    verbose: {
+      type: 'boolean'
+    },
+    match: {
+      enum: ['module', 'import']
+    },
     webpackChunkName: webpackChunkNameSchema,
     webpackFetchPriority: webpackFetchPrioritySchema,
     webpackMode: webpackModeSchema,
