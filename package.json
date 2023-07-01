@@ -1,6 +1,6 @@
 {
   "name": "magic-comments",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0",
   "description": "Utility for adding webpack magic comments at build time.",
   "type": "module",
   "main": "dist",

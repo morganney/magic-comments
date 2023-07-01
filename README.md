@@ -56,3 +56,8 @@ dynamicImportsMeta.forEach(meta) => {
   console.log(magicComment)
 })
 ```
+
+## Examples
+
+* [`babel-plugin-magic-comments`](https://github.com/morganney/babel-plugin-magic-comments)
+* [`magic-comments-loader`](https://github.com/morganney/magic-comments-loader)
