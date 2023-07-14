@@ -1,8 +1,10 @@
 import micromatch from 'micromatch'
 
-const pathIsMatch = (path, files) => {
-  const globs = []
-  const notglobs = []
+import type { Override, CommentSchema, CommentOptions } from './types.js'
+
+const pathIsMatch = (path: string, files: string | string[]) => {
+  const globs: string[] = []
+  const notglobs: string[] = []
 
   if (!Array.isArray(files)) {
     files = [files]
@@ -21,12 +23,12 @@ const pathIsMatch = (path, files) => {
     notglobs.every((notglob) => micromatch.isMatch(path, notglob))
   )
 }
-const getOverrideSchema = (commentSchema) => ({
+const getOverrideSchema = (commentSchema: CommentSchema) => ({
   type: 'array',
   items: {
     type: 'object',
     properties: {
-      config: commentSchema,
+      options: commentSchema,
       files: {
         oneOf: [
           {
@@ -44,23 +46,27 @@ const getOverrideSchema = (commentSchema) => ({
     additionalProperties: false
   }
 })
-const getOverrideConfig = (overrides, filepath, config) => {
+const getOverrideOptions = <T extends CommentOptions>(
+  overrides: Override<T>[],
+  modulePath: string,
+  options: T
+): T => {
   const length = overrides.length
 
   for (let i = 0; i < length; i++) {
-    if (pathIsMatch(filepath, overrides[i].files)) {
-      return { ...config, ...overrides[i].config }
+    if (pathIsMatch(modulePath, overrides[i].files)) {
+      return { ...options, ...overrides[i].options }
     }
   }
 
-  return config
+  return options
 }
 const relativePathPrefix = /^(?:(\.{1,2}\/)+)/
 const dynamicImportsWithoutComments =
   /(?<![\w.]|#!|(?:\/{2}.+\n?)+|\/\*[\s\w]*?|\*.+?|['"`][^)$,\n]*)import\s*\((?!\s*\/\*)(?<path>\s*?['"`][^)]+['"`]\s*)\)(?!\s*?\*\/)/gm
 
 export {
-  getOverrideConfig,
+  getOverrideOptions,
   getOverrideSchema,
   pathIsMatch,
   relativePathPrefix,
