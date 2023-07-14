@@ -1,4 +1,9 @@
+import { describe, expect, it } from '@jest/globals'
+
 import { commentFor, getMagicComment } from '../src/strategy.js'
+
+import { Mode } from '../src/webpackMode.js'
+import { FetchPriority } from '../src/webpackFetchPriority.js'
 
 describe('strategy', () => {
   it('comentFor is an object with functions named after magic comments', () => {
@@ -23,8 +28,8 @@ describe('strategy', () => {
       importPath: './import/module.js',
       options: {
         webpackChunkName: true,
-        webpackMode: 'eager',
-        webpackFetchPriority: 'high',
+        webpackMode: Mode.EAGER,
+        webpackFetchPriority: FetchPriority.HIGH,
         webpackIgnore: (modulePath, importPath) => {
           return importPath.includes('module')
         }

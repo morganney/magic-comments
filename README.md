@@ -48,12 +48,13 @@ dynamicImportsMeta.forEach(meta) => {
     modulePath,
     importPath: meta.importPath,
     options: {
-      webpackChunkName: true,
-      webpackFetchPriority: "high"
+      webpackChunkName: ['**/src/**/*.js'],
+      webpackMode: 'eager'
+      webpackFetchPriority: 'high'
     }
   })
-  
-  // prints /* webpackChunkName: "folder-module", webpackFetchPriority: "high" */
+
+  // prints /* webpackChunkName: "folder-module", webpackMode: "eager", webpackFetchPriority: "high" */
   console.log(magicComment)
 })
 ```

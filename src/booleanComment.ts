@@ -1,6 +1,24 @@
 import { getOverrideSchema, pathIsMatch, relativePathPrefix } from './util.js'
 
-const defaultSchema = {
+import type {
+  Glob,
+  ActiveFunc,
+  CommentFunc,
+  CommentOptions,
+  CommentConfig,
+  CommentParameters
+} from './types.js'
+
+interface BooleanCommentOptions extends CommentOptions {
+  active: boolean | ActiveFunc
+}
+type BooleanCommentValue =
+  | boolean
+  | Glob
+  | CommentFunc<boolean>
+  | CommentConfig<BooleanCommentOptions>
+
+const commentOptionsSchema = {
   type: 'object',
   properties: {
     active: {
@@ -9,7 +27,7 @@ const defaultSchema = {
   },
   additionalProperties: false
 }
-const getSchema = (commentSchema = defaultSchema) => ({
+const schema = {
   oneOf: [
     { type: 'boolean' },
     { type: 'string' },
@@ -23,59 +41,54 @@ const getSchema = (commentSchema = defaultSchema) => ({
     {
       type: 'object',
       properties: {
-        config: commentSchema,
-        overrides: getOverrideSchema(commentSchema)
+        options: commentOptionsSchema,
+        overrides: getOverrideSchema(commentOptionsSchema)
       },
-      required: ['config'],
+      required: ['options'],
       additionalProperties: false
     }
   ]
-})
-const getConfig = (
+}
+const resolve = ({
   value,
   match,
-  filepath,
-  importPath,
-  defaultConfig = { active: true }
-) => {
-  const path = match === 'import' ? importPath.replace(relativePathPrefix, '') : filepath
+  modulePath,
+  importPath
+}: CommentParameters<BooleanCommentValue>): BooleanCommentOptions => {
+  const path =
+    match === 'import' ? importPath.replace(relativePathPrefix, '') : modulePath
 
   if (value === true) {
-    return defaultConfig
+    return {
+      active: true
+    }
   }
 
   if (value === false) {
     return {
-      ...defaultConfig,
       active: false
     }
   }
 
   if (Array.isArray(value) || typeof value === 'string') {
     return {
-      ...defaultConfig,
       active: pathIsMatch(path, value)
     }
   }
 
   if (typeof value === 'function') {
-    const configValue = value(filepath, importPath)
-
-    if (configValue) {
+    if (value(modulePath, importPath)) {
       return {
-        ...defaultConfig,
-        active: true,
-        dynamic: configValue
+        active: true
       }
     }
 
     return {
-      ...defaultConfig,
       active: false
     }
   }
 
-  let config = { ...defaultConfig, ...value.config }
+  const options = { ...value.options }
 
   if (Array.isArray(value.overrides)) {
     const { overrides } = value
@@ -83,12 +96,13 @@ const getConfig = (
 
     for (let i = 0; i < length; i++) {
       if (pathIsMatch(path, overrides[i].files)) {
-        return { ...config, ...overrides[i].config }
+        return { ...options, ...overrides[i].options }
       }
     }
   }
 
-  return config
+  return options
 }
 
-export { getSchema, getConfig }
+export { schema, resolve }
+export type { BooleanCommentOptions, BooleanCommentValue }

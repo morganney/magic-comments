@@ -1,3 +1,5 @@
+import { describe, expect, it } from '@jest/globals'
+
 import { schema } from '../src/schema.js'
 
 describe('schema', () => {

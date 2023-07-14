@@ -1,8 +1,16 @@
+import { describe, expect, it } from '@jest/globals'
+
 import {
   pathIsMatch,
-  getOverrideConfig,
+  getOverrideOptions,
   dynamicImportsWithoutComments
 } from '../src/util.js'
+
+import type { CommentOptions } from '../src/types.js'
+
+interface TestOptions extends CommentOptions {
+  test: boolean | string
+}
 
 describe('dynamicImportsWithoutComments', () => {
   it('is a regex to match dyanmic imports', () => {
@@ -41,27 +49,29 @@ describe('pathIsMatch', () => {
   })
 })
 
-describe('getOverrideConfig', () => {
+describe('getOverrideOptions', () => {
   const overrides = [
     {
       files: '**/some/**/*.js',
-      config: {
+      options: {
         test: true
       }
     }
   ]
 
-  it('gets config overrides based on path globs', () => {
+  it('gets options overrides based on path globs', () => {
     expect(
-      getOverrideConfig(overrides, 'some/file/path.js', { test: false })
+      getOverrideOptions<TestOptions>(overrides, 'some/file/path.js', { test: false })
     ).toStrictEqual({
       test: true
     })
   })
 
-  it('returns the passed config if filepath is not a match', () => {
-    const config = { test: 'it' }
+  it('returns the passed options if filepath is not a match', () => {
+    const options = { test: 'it' }
 
-    expect(getOverrideConfig(overrides, 'miss/file/path.js', config)).toBe(config)
+    expect(getOverrideOptions<TestOptions>(overrides, 'miss/file/path.js', options)).toBe(
+      options
+    )
   })
 })
