@@ -14,7 +14,10 @@ interface ResolveParams {
   value: WebpackIncludeValue
   modulePath: string
 }
-type WebpackIncludeValue = CommentFunc<RegExp> | CommentConfig<WebpackIncludeOptions>
+type WebpackIncludeValue =
+  | RegExp
+  | CommentFunc<RegExp>
+  | CommentConfig<WebpackIncludeOptions>
 type WebpackIncludeComment = '' | `webpackInclude: /${string}/${string}`
 type WebpackInclude = (
   ctx: CommentParameters<WebpackIncludeValue>

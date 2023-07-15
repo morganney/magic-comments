@@ -14,7 +14,10 @@ interface ResolveParams {
   value: WebpackExcludeValue
   modulePath: string
 }
-type WebpackExcludeValue = CommentFunc<RegExp> | CommentConfig<WebpackExcludeOptions>
+type WebpackExcludeValue =
+  | RegExp
+  | CommentFunc<RegExp>
+  | CommentConfig<WebpackExcludeOptions>
 type WebpackExcludeComment = '' | `webpackExclude: /${string}/${string}`
 type WebpackExclude = (
   ctx: CommentParameters<WebpackExcludeValue>

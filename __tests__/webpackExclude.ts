@@ -18,6 +18,13 @@ describe('webpackExclude', () => {
     })
     const notRegex: unknown = false
 
+    expect(
+      webpackExclude({
+        modulePath,
+        importPath,
+        value: regex
+      })
+    ).toEqual(`webpackExclude: /${regex.source}/`)
     expect(comment).toEqual(`webpackExclude: /${regex.source}/`)
     expect(exclude).toHaveBeenCalledWith('/some/test/module.js', './some/import/path')
     expect(
