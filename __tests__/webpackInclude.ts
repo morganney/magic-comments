@@ -18,6 +18,13 @@ describe('webpackInclude', () => {
     })
     const notRegex: unknown = false
 
+    expect(
+      webpackInclude({
+        modulePath,
+        importPath,
+        value: regex
+      })
+    ).toEqual(`webpackInclude: /${regex.source}/`)
     expect(comment).toEqual(`webpackInclude: /${regex.source}/`)
     expect(include).toHaveBeenCalledWith('/some/test/module.js', './some/import/path')
     expect(

@@ -121,11 +121,7 @@ const resolve = ({
   }
 
   if (Array.isArray(value.overrides)) {
-    options = getOverrideOptions<WebpackChunkNameOptions>(
-      value.overrides,
-      modulePath,
-      options
-    )
+    options = getOverrideOptions<WebpackChunkNameOptions>(value.overrides, path, options)
   }
 
   return options
