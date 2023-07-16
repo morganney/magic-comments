@@ -108,7 +108,7 @@ The specifier from the dynamic import. For example, for `import('./specifier.js'
 
 **default** `false`
 
-Whether the returned comment should surrounded by `/*` and `*/`, for example, `/* comment */` vs ``  comment  ``.
+Whether the returned comment should be surrounded by `/*` and `*/`, for example, `/* comment */` vs ``  comment  ``.
 
 ### `match`
 
@@ -221,7 +221,7 @@ Possible values:
 * `string | string[]` - When the glob(s) match a path from a [`match`](#match) path, a `webpackChunkName` comment is added using the derived path from the import specifier in kebab-case as the chunk name.
 * `(modulePath: string, importPath: string) => string | false` - Return a string to be used as the chunk name. Returning a falsy value will skip adding the comment.
 * `options.basename`:
-  * `true` - Use only the [basename](https://nodejs.org/api/path.html#pathbasenamepath-suffix) from the import specifier as the chunk name. Relative imports may result in name collisions. Use in areas where you know the basenames are unique.
+  * `true` - Use only the [basename](https://nodejs.org/api/path.html#pathbasenamepath-suffix) from the import specifier as the chunk name. Might result in name collisions. Use in areas where you know the basenames are unique.
   * `false` - Use the full derived path from the import specifier in kebab-case as the chunk name, same as the default behavior.
 * `options.name`:
   * `string` - Set a fixed string to be used for all dynamic imports, or based on overrides.
@@ -269,7 +269,7 @@ Possible values:
 * `(modulePath: string, importPath: string) => FetchPriority | false` - Return a string to be used as the priority. Returning a falsy value or an unsupported string will **not** add the comment.
 * `options.fetchPriority`:
   * `FetchPriority` - Sets the fetch priority to the provided value when adding the comment.
-  * `(modulePath: string, importPath: string) => FetchPriority | false` - Same as using a function for the loader option.
+  * `(modulePath: string, importPath: string) => FetchPriority | false` - Same as using a function for the value.
 * `options.active`:
   * `true` - Disable the comment.
   * `false` - Enable the comment.
@@ -314,7 +314,7 @@ Possible values:
 * `(modulePath: string, importPath: string) => Mode | false` - Return a string to be used as the mode. Returning a falsy value or an unsupported string will **not** add the comment.
 * `options.mode`:
   * `Mode` - Sets the chunk loading mode to the provided value when adding the comment.
-  * `(modulePath: string, importPath: string) => Mode | false` - Same as using a function for the loader option.
+  * `(modulePath: string, importPath: string) => Mode | false` - Same as using a function for the value.
 * `options.active`:
   * `true` - Disable the comment.
   * `false` - Enable the comment.
@@ -397,7 +397,7 @@ Possible values:
 *  `(modulePath: string, importPath: string) => RegExp` - Adds a `webpackInclude` comment using the provided regular expression. Returning anything other than a regular expression does **not** add the comment.
 *  `options.include`:
    * `RegExp` - Adds a `webpackInclude` comment to **all** dynamic imports, or only those matching a path from the [`match`](#match) path if using overrides.
-   * `(modulePath: string, importPath: string) => RegExp` - Same as using a function in the loader option.
+   * `(modulePath: string, importPath: string) => RegExp` - Same as using a function for the value.
 * `options.active`:
   * `true` - Disable the comment.
   * `false` - Enable the comment.
@@ -428,7 +428,7 @@ Possible values:
 *  `(modulePath: string, importPath: string) => RegExp` - Adds a `webpackExclude` comment using the provided regular expression. Returning anything other than a regular expression does **not** add the comment.
 *  `options.exclude`:
    * `RegExp` - Adds a `webpackExclude` comment to **all** dynamic imports, or only those matching a path from the [`match`](#match) path if using overrides.
-   * `(modulePath: string, importPath: string) => RegExp` - Same as using a function in the loader option.
+   * `(modulePath: string, importPath: string) => RegExp` - Same as using a function for the value.
 * `options.active`:
   * `true` - Disable the comment.
   * `false` - Enable the comment.
@@ -455,7 +455,7 @@ When using a [`CommentConfig`](#commentconfig) the following comment options are
 Possible values:
 * `(modulePath: string, importPath: string) => string[]` - Adds a `webpackExports` comment using the strings in the returned array as the export names. Returning anything other than an array will **not** add the comment.
 * `options.exports`:
-  * `(modulePath: string, importPath: string) => string[]` - Same as using a function in the loader option.
+  * `(modulePath: string, importPath: string) => string[]` - Same as using a function for the value.
 * `options.active`:
   * `true` - Disable the comment.
   * `false` - Enable the comment.
@@ -524,7 +524,7 @@ Array<{
 }>
 ```
 
-Where the generic `T` is related to the magic comment the options are associated with. The `files` and `options` keys are both **required**, where the former is a glob string, or an array thereof, and the latter is the associated magic comment's [`CommentOptions`](#commentoptions).
+Where the generic `T` is related to the magic comment the options are associated with. The `files` and `options` properties are both **required**, where the former is a glob string, or an array thereof, and the latter is the associated magic comment's [`CommentOptions`](#commentoptions).
 
 Here's a more complete example of how overrides can be applied.
 
