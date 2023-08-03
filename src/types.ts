@@ -51,6 +51,12 @@ interface CommentParameters<T> {
   match?: Match
 }
 
+export { getMagicComment } from './strategy.js'
+export { schema } from './schema.js'
+export { FetchPriority } from './webpackFetchPriority.js'
+export { Mode } from './webpackMode.js'
+
+export type { MagicComments } from './strategy.js'
 export type {
   Glob,
   Match,

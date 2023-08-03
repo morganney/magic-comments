@@ -79,3 +79,4 @@ const getMagicComment = ({
 }
 
 export { commentFor, getMagicComment }
+export type { MagicComments }
