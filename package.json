@@ -1,41 +1,30 @@
 {
   "name": "magic-comments",
-  "version": "2.1.6",
-  "description": "Utility for adding webpack magic comments at build time.",
+  "version": "2.1.7",
+  "description": "Node.js tool for adding Webpack magic comments at build time.",
   "type": "module",
   "main": "dist",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/types.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/esm/types.d.ts",
+        "default": "./dist/esm/index.js"
       },
       "require": {
         "types": "./dist/cjs/types.d.cts",
         "default": "./dist/cjs/index.cjs"
       },
-      "default": "./dist/index.js"
-    },
-    "./*.js": {
-      "import": {
-        "types": "./dist/*.d.ts",
-        "default": "./dist/*.js"
-      },
-      "require": {
-        "types": "./dist/cjs/*.d.cts",
-        "default": "./dist/cjs/*.cjs"
-      },
-      "default": "./dist/*.js"
+      "default": "./dist/esm/index.js"
     },
     "./package.json": "./package.json"
   },
-  "types": "./dist/index.d.ts",
+  "types": "./dist/esm/index.d.ts",
   "engines": {
     "node": ">=12.20.0"
   },
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "duel",
+    "build": "duel --dirs",
     "lint": "eslint . src __tests__ --ext .js,.ts",
     "lint:fix": "npm run lint -- --fix",
     "test": "BABEL_ENV=test jest",
@@ -46,13 +35,10 @@
     "schema-utils": "^4.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.22.5",
-    "@babel/core": "^7.22.5",
-    "@babel/eslint-parser": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
     "@jest/globals": "^29.6.1",
-    "@knighted/duel": "^1.0.0-alpha.1",
+    "@knighted/duel": "^1.0.0-rc.2",
     "@types/micromatch": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
@@ -73,11 +59,11 @@
     "url": "https://github.com/morganney/magic-comments/issues"
   },
   "keywords": [
-    "webpack",
-    "magic",
-    "comments",
+    "node",
     "build",
-    "utility"
+    "tool",
+    "webpack",
+    "magic comments"
   ],
   "files": [
     "dist"
