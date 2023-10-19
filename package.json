@@ -1,6 +1,6 @@
 {
   "name": "magic-comments",
-  "version": "2.1.8",
+  "version": "2.1.9",
   "description": "Node.js tool for adding Webpack magic comments at build time.",
   "type": "module",
   "main": "dist",
