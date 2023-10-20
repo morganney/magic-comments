@@ -1,6 +1,6 @@
 {
   "name": "magic-comments",
-  "version": "2.1.9",
+  "version": "2.1.10",
   "description": "Node.js tool for adding Webpack magic comments at build time.",
   "type": "module",
   "main": "dist",
@@ -38,7 +38,7 @@
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
     "@jest/globals": "^29.6.1",
-    "@knighted/duel": "^1.0.0-rc.2",
+    "@knighted/duel": "^1.0.1",
     "@types/micromatch": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
