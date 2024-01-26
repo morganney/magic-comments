@@ -36,29 +36,34 @@ const mod = import('./folder/module.js')
 
 **tooling**
 ```js
+import { resolve } from 'node:path'
+import { readFileSync } from 'node:fs'
+import { parse } from 'acorn' // Or another parser
 import { getMagicComment } from 'magic-comments'
+import { traverseForImportSpecifier } from './utils.js'
 
-const modulePath = resolve(cwd, './src/file.js')
-const code = fs.readFileSync(modulePath)
+const filename = resolve(cwd, './src/file.js')
+const code = readFileSync(filename)
 const ast = parse(code)
 const dynamicImports = traverseForImportSpecifiers(ast)
 
-dynamicImports.forEach(({ importPath }) => {
+dynamicImports.forEach(({ specifier }) => {
   const magicComment = getMagicComment({
-    modulePath,
-    importPath,
+    modulePath: filename,
+    importPath: specifier,
     // The options are names of webpack magic comments
     options: {
       webpackChunkName: true,
       webpackFetchPriority: (modulePath, importPath) => {
-        if (importPath.endsWith('module.js')) {
+        if (importPath.endsWith('important.js')) {
           return 'high'
         }
       }
     }
   })
-  // /* webpackChunkName: "folder-module", webpackFetchPriority: "high" */
+
   console.log(magicComment)
+  // /* webpackChunkName: "module-important", webpackFetchPriority: "high" */
 })
 ```
 
