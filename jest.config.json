@@ -3,7 +3,7 @@
   "collectCoverageFrom": ["**/src/**/*.ts", "!**/node_modules/**"],
   "coverageReporters": ["json", "lcov", "text", "clover", "text-summary"],
   "modulePathIgnorePatterns": ["dist"],
-  "resolver": "ts-jest-resolver",
+  "resolver": "<rootDir>/jest.resolver.js",
   "testMatch": [
     "**/__tests__/**/*.ts"
   ]
